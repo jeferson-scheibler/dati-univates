@@ -946,6 +946,163 @@ section { position: relative; z-index: 2; }
 }
 
 /* =========================================================
+   GESTÃO
+   ========================================================= */
+#gestao {
+  padding: 8rem 0;
+  background: var(--ink-2);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.gestao-grid {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 3.5rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+.gestao-photo {
+  position: relative;
+  border: 1px solid var(--line-2);
+  line-height: 0;
+  overflow: hidden;
+}
+.gestao-photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: saturate(.95) contrast(1.02);
+  transition: transform .5s cubic-bezier(.2,.7,.2,1);
+}
+.gestao-photo:hover img { transform: scale(1.03); }
+.gestao-photo::before {
+  content: '';
+  position: absolute;
+  top: -1px; right: -1px;
+  width: 56px; height: 56px;
+  border-top: 2px solid var(--aqua);
+  border-right: 2px solid var(--aqua);
+  z-index: 2;
+}
+.gcap {
+  position: absolute;
+  left: 0; bottom: 0;
+  z-index: 2;
+  font-family: var(--mono);
+  font-size: .62rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: rgba(5,7,15,.82);
+  border-top: 1px solid var(--line-2);
+  border-right: 1px solid var(--line-2);
+  padding: .55rem .95rem;
+}
+.gestao-intro .sub-p { margin-top: 0; }
+
+/* recrutamento v2.6 */
+.recruit {
+  margin-top: 3.5rem;
+  border: 1px solid var(--line-2);
+  padding: clamp(2rem, 4vw, 3.4rem);
+  background: linear-gradient(135deg, rgba(60,232,201,.06), rgba(47,107,255,.04));
+  position: relative;
+  overflow: hidden;
+}
+.recruit::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 70px; height: 70px;
+  border-top: 1px solid var(--aqua);
+  border-left: 1px solid var(--aqua);
+  opacity: .4;
+}
+.recruit-tag {
+  font-family: var(--mono);
+  font-size: .66rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--aqua);
+  margin-bottom: 1rem;
+}
+.recruit-h {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3.6vw, 2.4rem);
+  letter-spacing: -.02em;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 1.2rem;
+}
+.recruit-lead {
+  font-size: .96rem;
+  line-height: 1.85;
+  color: var(--text);
+  max-width: 820px;
+}
+.recruit-lead + .recruit-lead { margin-top: 1rem; }
+.recruit-lead strong { color: var(--white); font-weight: 600; }
+.recruit-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  margin: 2.4rem 0;
+}
+.recruit-col h4 {
+  font-family: var(--mono);
+  font-size: .64rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--aqua);
+  margin-bottom: 1rem;
+}
+.recruit-list { list-style: none; display: flex; flex-direction: column; gap: .65rem; }
+.recruit-list li {
+  position: relative;
+  padding-left: 1.4rem;
+  font-size: .9rem;
+  color: var(--text);
+  line-height: 1.55;
+}
+.recruit-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: .55em;
+  width: 6px; height: 6px;
+  background: var(--aqua);
+  transform: rotate(45deg);
+}
+.recruit-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--line);
+  padding-top: 2rem;
+}
+.recruit-closing {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--text);
+  max-width: 520px;
+}
+.recruit-closing b { color: var(--aqua); font-weight: 600; }
+
+/* ICSC ambassador */
+.amb {
+  margin-top: 1.4rem;
+  font-size: .92rem;
+  line-height: 1.75;
+  color: var(--text);
+}
+.amb strong { color: var(--white); font-weight: 600; }
+.btn-mt { margin-top: 1.5rem; }
+
+/* =========================================================
    FOOTER
    ========================================================= */
 footer {
@@ -1010,6 +1167,9 @@ footer {
   .partners { grid-template-columns: 1fr; }
   .benefits { grid-template-columns: 1fr; }
   .join-foot { flex-direction: column; align-items: flex-start; }
+  .gestao-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .recruit-cols { grid-template-columns: 1fr; gap: 2rem; }
+  .recruit-foot { flex-direction: column; align-items: flex-start; }
 }
 @media (max-width: 540px) {
   .stats { grid-template-columns: 1fr; }
@@ -1047,6 +1207,7 @@ footer {
     <li><a href="#parceiros">Certificações</a></li>
     <li><a href="#partners">Partners</a></li>
     <li><a href="#iniciativas">Iniciativas</a></li>
+    <li><a href="#gestao">Gestão</a></li>
   </ul>
 </nav>
 
@@ -1329,6 +1490,14 @@ footer {
           <img src="assets/logos/icsc.png" alt="ICSC" onerror="this.outerHTML='&lt;span class=\'icsc-fb\'&gt;ICSC&lt;/span&gt;'">
           <p class="icsc-t">Competição internacional de ciência da computação para estudantes.</p>
         </div>
+        <p class="amb">
+          <strong>Jeferson Scheibler</strong> é o embaixador local da ICSC na Univates.
+          Em caso de dúvidas sobre a competição ou a inscrição, fale com ele.
+        </p>
+        <a class="btn btn-fill btn-mt" href="https://icscompetition.org/amb/jscheibler" target="_blank" rel="noopener">
+          Fazer a prova de qualificação
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
       </div>
       <div class="rvr">
         <p class="sub-k">Comunidade ativa</p>
@@ -1343,6 +1512,76 @@ footer {
             <p class="discord-t">Entrar na comunidade do DATI</p>
           </div>
           <span class="discord-u">chat.whatsapp.com</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GESTÃO -->
+<section id="gestao">
+  <div class="wrap">
+    <div class="head rv">
+      <p class="kicker">06 / Gestão</p>
+      <h2 class="title">Quem está<br><span class="dim">à frente</span></h2>
+    </div>
+
+    <div class="gestao-grid">
+      <div class="gestao-photo rvl">
+        <img src="assets/img/dati_v25.jpg" alt="Gestão DATI v2.5" onerror="this.closest('.gestao-photo').style.display='none'">
+        <span class="gcap">Gestão v2.5</span>
+      </div>
+      <div class="gestao-intro rvr">
+        <p class="sub-k">Gestão atual</p>
+        <h3 class="sub-h">DATI v2.5</h3>
+        <p class="sub-p">
+          A gestão atual conduz os projetos, eventos e parcerias do DATI ao longo de 2026,
+          trabalhando para aproximar a formação acadêmica das demandas reais do mercado de tecnologia.
+        </p>
+      </div>
+    </div>
+
+    <!-- recrutamento v2.6 -->
+    <div class="recruit rv">
+      <p class="recruit-tag">Processo seletivo</p>
+      <h3 class="recruit-h">DATI v2.6: tá montando o time.</h3>
+      <p class="recruit-lead">
+        Estamos construindo um time que não aceita o comum, que enxerga os cursos de TI com outros
+        olhos e tem coragem de mudar o que sempre foi feito do mesmo jeito.
+      </p>
+      <p class="recruit-lead">
+        Se você tem <strong>pró-atividade no sangue</strong>, ideia na cabeça e vontade real de
+        transformar a experiência acadêmica dos seus colegas, esse grupo foi feito pra você.
+      </p>
+
+      <div class="recruit-cols">
+        <div class="recruit-col">
+          <h4>O que buscamos</h4>
+          <ul class="recruit-list">
+            <li>Pessoas que agem antes de serem chamadas</li>
+            <li>Mentes que questionam o status quo</li>
+            <li>Quem transforma ideia em projeto</li>
+            <li>Comprometimento com os cursos de TI e com a comunidade acadêmica</li>
+          </ul>
+        </div>
+        <div class="recruit-col">
+          <h4>O que você vai encontrar</h4>
+          <ul class="recruit-list">
+            <li>Um espaço de protagonismo real</li>
+            <li>Projetos que impactam a vida de centenas de estudantes</li>
+            <li>Um time que respira inovação</li>
+            <li>A chance de deixar sua marca na história do curso</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="recruit-foot">
+        <p class="recruit-closing">
+          A gestão v2.6 começa em agosto. <b>O processo começa agora.</b>
+        </p>
+        <a class="btn btn-fill" href="https://chat.whatsapp.com/Isqmcc8bx33078rPERXelT" target="_blank" rel="noopener">
+          Quero participar
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </div>
     </div>
