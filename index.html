@@ -659,13 +659,18 @@ section { position: relative; z-index: 2; }
 .cert:hover { background: var(--ink-3); }
 .cert:hover::after { width: 100%; }
 .cert-logo {
-  height: 42px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  margin-bottom: 1.4rem;
+  justify-content: center;
+  background: #f5f7fc;
+  border-radius: 7px;
+  padding: 13px 18px;
+  margin-bottom: 1.5rem;
+  min-height: 56px;
+  transition: transform .3s, box-shadow .3s;
 }
-.cert-logo img { max-height: 42px; width: auto; filter: brightness(0) invert(.65); transition: filter .3s; }
-.cert:hover .cert-logo img { filter: brightness(0) invert(1); }
+.cert:hover .cert-logo { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+.cert-logo img { max-height: 30px; width: auto; }
 .cert-fallback {
   font-family: var(--mono);
   font-size: .8rem;
@@ -734,7 +739,7 @@ section { position: relative; z-index: 2; }
   background: var(--ink-3);
   border-left: 2px solid var(--aqua);
 }
-.icsc img { height: 38px; filter: brightness(0) invert(.78); }
+.icsc img { max-height: 30px; width: auto; background: #f5f7fc; border-radius: 6px; padding: 9px 12px; }
 .icsc-fb {
   font-family: var(--mono);
   font-size: .78rem;
