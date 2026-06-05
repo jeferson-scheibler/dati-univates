@@ -660,13 +660,16 @@ section { position: relative; z-index: 2; }
 .cert:hover { background: var(--ink-3); }
 .cert:hover::after { width: 100%; }
 .cert-logo {
-  height: 40px;
+  min-height: 54px;
   display: flex;
   align-items: center;
   margin-bottom: 1.5rem;
 }
-.cert-logo img { max-height: 40px; width: auto; opacity: .9; transition: opacity .3s; }
+.cert-logo img { width: auto; opacity: .9; transition: opacity .3s; }
 .cert:hover .cert-logo img { opacity: 1; }
+.cert-logo img.lg-rh { max-height: 34px; }
+.cert-logo img.lg-cs { max-height: 52px; }
+.cert-logo img.lg-gc { max-height: 46px; }
 .cert-fallback {
   font-family: var(--mono);
   font-size: .8rem;
@@ -695,11 +698,180 @@ section { position: relative; z-index: 2; }
 }
 
 /* =========================================================
+   ENTERPRISE PARTNERS
+   ========================================================= */
+#partners {
+  padding: 8rem 0;
+  background: var(--ink-2);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.partners {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+.partner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 2.8rem 2.2rem;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  transition: background .3s;
+}
+.partner::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -1px;
+  width: 0; height: 2px;
+  background: var(--blue);
+  transition: width .4s cubic-bezier(.2,.7,.2,1);
+}
+.partner:hover { background: var(--ink-3); }
+.partner:hover::after { width: 100%; }
+.partner-logo {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+}
+.partner-logo img { max-height: 46px; width: auto; opacity: .92; transition: opacity .3s; }
+.partner:hover .partner-logo img { opacity: 1; }
+.partner-fallback {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: -.01em;
+  color: var(--white);
+}
+.partner-name {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--white);
+  letter-spacing: -.01em;
+}
+.partner-desc { font-size: .85rem; color: var(--dim); line-height: 1.65; flex: 1; }
+.partner-link {
+  font-family: var(--mono);
+  font-size: .64rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--aqua);
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+}
+.partner-link svg { width: 13px; height: 13px; transition: transform .25s; }
+.partner:hover .partner-link svg { transform: translate(3px, -3px); }
+.partner-idx {
+  position: absolute;
+  top: 1.4rem; right: 1.6rem;
+  font-family: var(--mono);
+  font-size: .6rem;
+  letter-spacing: .1em;
+  color: var(--faint);
+}
+
+/* join / seja parceiro */
+.join {
+  margin-top: 3rem;
+  border: 1px solid var(--line-2);
+  padding: clamp(2rem, 4vw, 3.4rem);
+  background: linear-gradient(135deg, rgba(47,107,255,.06), rgba(60,232,201,.035));
+  position: relative;
+  overflow: hidden;
+}
+.join::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 70px; height: 70px;
+  border-top: 1px solid var(--aqua);
+  border-right: 1px solid var(--aqua);
+  opacity: .4;
+}
+.join-lead {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(1.15rem, 2.3vw, 1.55rem);
+  line-height: 1.5;
+  letter-spacing: -.01em;
+  color: var(--white);
+  max-width: 780px;
+}
+.join-lead .aq { color: var(--aqua); }
+.join-sub {
+  margin-top: 1.4rem;
+  font-size: .96rem;
+  line-height: 1.85;
+  color: var(--text);
+  max-width: 780px;
+}
+.join-q {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: -.01em;
+  color: var(--white);
+  margin: 2.4rem 0 1.5rem;
+}
+.benefits {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+.benefit {
+  background: var(--ink-3);
+  padding: 1.9rem 1.7rem;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  transition: background .3s;
+}
+.benefit:hover { background: var(--ink-2); }
+.benefit-n {
+  font-family: var(--mono);
+  font-size: .62rem;
+  letter-spacing: .2em;
+  color: var(--aqua);
+  margin-bottom: .9rem;
+}
+.benefit-t {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.02rem;
+  letter-spacing: -.01em;
+  color: var(--white);
+  margin-bottom: .55rem;
+}
+.benefit-d { font-size: .84rem; color: var(--dim); line-height: 1.65; }
+.join-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 2.4rem;
+}
+.join-closing {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--text);
+  max-width: 560px;
+}
+.join-closing b { color: var(--white); font-weight: 600; }
+
+/* =========================================================
    INICIATIVAS
    ========================================================= */
 #iniciativas {
   padding: 8rem 0;
-  background: var(--ink-2);
+  background: var(--ink);
   border-top: 1px solid var(--line);
 }
 .init {
@@ -835,6 +1007,9 @@ footer {
   .stat { border-top: 1px solid var(--line); }
   .stat:nth-child(-n+2) { border-top: none; }
   .certs { grid-template-columns: 1fr; }
+  .partners { grid-template-columns: 1fr; }
+  .benefits { grid-template-columns: 1fr; }
+  .join-foot { flex-direction: column; align-items: flex-start; }
 }
 @media (max-width: 540px) {
   .stats { grid-template-columns: 1fr; }
@@ -869,7 +1044,8 @@ footer {
   <ul class="nav-links">
     <li><a href="#sobre">Sobre</a></li>
     <li><a href="#eventos">Eventos</a></li>
-    <li><a href="#parceiros">Parceiros</a></li>
+    <li><a href="#parceiros">Certificações</a></li>
+    <li><a href="#partners">Partners</a></li>
     <li><a href="#iniciativas">Iniciativas</a></li>
   </ul>
 </nav>
@@ -1017,7 +1193,7 @@ footer {
       <div class="cert rv">
         <span class="cert-idx">RH / 01</span>
         <div class="cert-logo">
-          <img src="assets/logos/redhat.svg" alt="Red Hat" onerror="this.outerHTML='&lt;span class=\'cert-fallback\'&gt;Red Hat&lt;/span&gt;'">
+          <img class="lg-rh" src="assets/logos/redhat.svg" alt="Red Hat" onerror="this.outerHTML='&lt;span class=\'cert-fallback\'&gt;Red Hat&lt;/span&gt;'">
         </div>
         <div class="cert-name">Red Hat Academy</div>
         <div class="cert-desc">Linux, OpenShift, Ansible e automação de infraestrutura. Certificações reconhecidas globalmente no universo enterprise.</div>
@@ -1025,7 +1201,7 @@ footer {
       <div class="cert rv d1">
         <span class="cert-idx">CS / 02</span>
         <div class="cert-logo">
-          <img src="assets/logos/cisco.png" alt="Cisco" onerror="this.outerHTML='&lt;span class=\'cert-fallback\'&gt;Cisco&lt;/span&gt;'">
+          <img class="lg-cs" src="assets/logos/cisco.png" alt="Cisco" onerror="this.outerHTML='&lt;span class=\'cert-fallback\'&gt;Cisco&lt;/span&gt;'">
         </div>
         <div class="cert-name">Cisco Networking Academy</div>
         <div class="cert-desc">Redes, cibersegurança e infraestrutura digital. Trilha completa do CCNA ao CCNP com apoio da Univates.</div>
@@ -1033,10 +1209,100 @@ footer {
       <div class="cert rv d2">
         <span class="cert-idx">GC / 03</span>
         <div class="cert-logo">
-          <img src="assets/logos/google-cloud.png" alt="Google Cloud" onerror="this.outerHTML='&lt;span class=\'cert-fallback\'&gt;Google Cloud&lt;/span&gt;'">
+          <img class="lg-gc" src="assets/logos/google-cloud.png" alt="Google Cloud" onerror="this.outerHTML='&lt;span class=\'cert-fallback\'&gt;Google Cloud&lt;/span&gt;'">
         </div>
         <div class="cert-name">Google Cloud</div>
         <div class="cert-desc">Cloud computing, dados e inteligência artificial. Trilhas de aprendizado com labs e certificações oficiais.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENTERPRISE PARTNERS -->
+<section id="partners">
+  <div class="wrap">
+    <div class="head rv">
+      <p class="kicker">04 / Enterprise partners</p>
+      <h2 class="title">Quem caminha<br><span class="dim">junto com a gente</span></h2>
+    </div>
+    <div class="partners">
+      <a class="partner rv" href="https://clinicaexperts.com.br/" target="_blank" rel="noopener">
+        <span class="partner-idx">EP / 01</span>
+        <div class="partner-logo">
+          <img src="assets/logos/clinicaexperts.svg" alt="Clínica Experts" onerror="this.outerHTML='&lt;span class=\'partner-fallback\'&gt;Clínica Experts&lt;/span&gt;'">
+        </div>
+        <div class="partner-name">Clínica Experts</div>
+        <div class="partner-desc">Sistema de gestão para clínicas e consultórios de saúde, automatizando a administração de ponta a ponta.</div>
+        <span class="partner-link">Visitar site
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </span>
+      </a>
+
+      <a class="partner rv d1" href="https://www.retta.com.br/" target="_blank" rel="noopener">
+        <span class="partner-idx">EP / 02</span>
+        <div class="partner-logo">
+          <img src="assets/logos/retta.png" alt="Retta" onerror="this.outerHTML='&lt;span class=\'partner-fallback\'&gt;Retta&lt;/span&gt;'">
+        </div>
+        <div class="partner-name">Retta</div>
+        <div class="partner-desc">Desenvolvimento de software e outsourcing de TI, criando soluções sob medida para a eficiência das empresas.</div>
+        <span class="partner-link">Visitar site
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </span>
+      </a>
+
+      <a class="partner rv d2" href="https://www.interactsolutions.com/" target="_blank" rel="noopener">
+        <span class="partner-idx">EP / 03</span>
+        <div class="partner-logo">
+          <img src="assets/logos/interact.png" alt="Interact Solutions" onerror="this.outerHTML='&lt;span class=\'partner-fallback\'&gt;Interact Solutions&lt;/span&gt;'">
+        </div>
+        <div class="partner-name">Interact Solutions</div>
+        <div class="partner-desc">Softwares de governança corporativa que integram processos, projetos, qualidade, riscos e compliance.</div>
+        <span class="partner-link">Visitar site
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </span>
+      </a>
+    </div>
+
+    <!-- Seja parceiro -->
+    <div class="join rv">
+      <p class="join-lead">
+        O distanciamento entre a formação acadêmica e as demandas reais do mercado é um dos maiores
+        gargalos da tecnologia atual. Nossa missão em 2026 é clara:
+        <span class="aq">conectar a sala de aula à realidade prática do mercado.</span>
+      </p>
+      <p class="join-sub">
+        Acreditamos que a verdadeira inovação não reside apenas em ferramentas ou infraestruturas de
+        ponta, mas no investimento em talentos promissores. Aqueles que, ainda na graduação, já buscam
+        dar um level up em suas carreiras.
+      </p>
+
+      <p class="join-q">Por que a sua empresa deve ser parceira oficial do DATI?</p>
+      <div class="benefits">
+        <div class="benefit">
+          <div class="benefit-n">01</div>
+          <div class="benefit-t">Selo Tech Builder 2026</div>
+          <div class="benefit-d">Mostre que sua marca não é apenas consumidora de tecnologia, mas investidora direta em quem a constrói.</div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-n">02</div>
+          <div class="benefit-t">Formação alinhada à realidade</div>
+          <div class="benefit-d">Ao fortalecer o vínculo com a universidade, sua empresa ajuda a moldar uma formação adequada aos desafios reais do dia a dia.</div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-n">03</div>
+          <div class="benefit-t">Employer Branding</div>
+          <div class="benefit-d">Pule etapas na corrida por talentos. Conecte-se com os melhores alunos de Engenharia de Software e Computação antes dos concorrentes.</div>
+        </div>
+      </div>
+
+      <div class="join-foot">
+        <p class="join-closing">
+          O futuro da nossa região não é algo que simplesmente acontece. <b>Ele é escrito por quem investe na base.</b>
+        </p>
+        <a class="btn btn-fill" href="mailto:dati@univates.br?subject=Quero%20ser%20parceiro%20do%20DATI">
+          Seja um parceiro
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
       </div>
     </div>
   </div>
@@ -1046,7 +1312,7 @@ footer {
 <section id="iniciativas">
   <div class="wrap">
     <div class="head rv">
-      <p class="kicker">04 / Iniciativas</p>
+      <p class="kicker">05 / Iniciativas</p>
       <h2 class="title">Dentro e fora<br><span class="dim">da universidade</span></h2>
     </div>
     <div class="init">
