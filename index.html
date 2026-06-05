@@ -7,7 +7,7 @@
 <meta name="description" content="Diretório Acadêmico de Tecnologia da Informação da Univates. Eventos, certificações e iniciativas para a comunidade de TI.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Chakra+Petch:wght@500;600;700&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 
 /* =========================================================
@@ -30,6 +30,7 @@
   --white:    #eef3ff;
 
   --display:  'Bricolage Grotesque', sans-serif;
+  --wordmark: 'Chakra Petch', sans-serif;
   --body:     'Hanken Grotesk', sans-serif;
   --mono:     'JetBrains Mono', monospace;
 
@@ -102,18 +103,14 @@ img { display: block; max-width: 100%; }
   0%,100% { transform: translate(0,0) scale(1); }
   50%     { transform: translate(-5vw, -4vw) scale(1.08); }
 }
-/* fine grid */
-.grid-lines {
+/* binary substrate */
+#binary {
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse 90% 80% at 50% 30%, #000 35%, transparent 85%);
-  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 30%, #000 35%, transparent 85%);
+  opacity: .5;
+  mask-image: radial-gradient(ellipse 95% 85% at 50% 35%, #000 30%, transparent 92%);
+  -webkit-mask-image: radial-gradient(ellipse 95% 85% at 50% 35%, #000 30%, transparent 92%);
 }
-#particles { position: absolute; inset: 0; opacity: .6; }
 /* grain */
 .grain {
   position: fixed;
@@ -161,13 +158,13 @@ nav.scrolled {
 .nav-brand { display: flex; align-items: center; gap: .7rem; }
 .nav-brand img { height: 30px; filter: brightness(0) invert(1); }
 .nav-mark {
-  font-family: var(--mono);
-  font-size: .82rem;
-  font-weight: 500;
-  letter-spacing: .14em;
+  font-family: var(--wordmark);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: .16em;
   color: var(--white);
 }
-.nav-mark b { color: var(--aqua); font-weight: 500; }
+.nav-mark b { color: var(--aqua); font-weight: 700; }
 .nav-links { display: flex; gap: 2.4rem; list-style: none; }
 .nav-links a {
   font-family: var(--mono);
@@ -265,15 +262,16 @@ nav.scrolled {
   animation: rise .8s .3s forwards;
 }
 .hero-title {
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: clamp(4.5rem, 17vw, 13rem);
-  line-height: .82;
-  letter-spacing: -.04em;
+  font-family: var(--wordmark);
+  font-weight: 700;
+  font-size: clamp(3.6rem, 14vw, 11rem);
+  line-height: .9;
+  letter-spacing: .04em;
   color: var(--white);
   position: relative;
   opacity: 0;
   animation: rise .9s .45s forwards;
+  text-shadow: 0 0 40px rgba(47,107,255,.25);
 }
 .hero-title .aq {
   color: var(--aqua);
@@ -856,8 +854,7 @@ footer {
 <div class="atmo">
   <div class="glow g1"></div>
   <div class="glow g2"></div>
-  <div class="grid-lines"></div>
-  <canvas id="particles"></canvas>
+  <canvas id="binary"></canvas>
 </div>
 <div class="grain"></div>
 <div id="prog"></div>
@@ -1108,50 +1105,105 @@ addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', scrollY > 40);
 });
 
-/* ---- particle field (refined, aqua/blue) ---- */
+/* ---- binary substrate: ASCII binary of TI / DATI / tech words,
+        revealed by a slow scan wave with occasional bit-flips ---- */
 (function () {
-  const c = document.getElementById('particles');
+  const c = document.getElementById('binary');
   const x = c.getContext('2d');
-  let W, H, pts;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function size() {
+  const CELL = 19;
+  const FONT = '12px "JetBrains Mono", monospace';
+  const WORDS = ['DATI', 'TI', 'DEV', 'CODE', 'GIT', 'CLOUD', 'LINUX', 'CISCO', 'NETWORK', 'UNIVATES'];
+
+  let W, H, cols, rows, grid, base, scan = 0, flips = [];
+
+  const bitsOf = s => [...s].map(ch => ch.charCodeAt(0).toString(2).padStart(8, '0')).join('');
+
+  function build() {
     W = c.width = innerWidth;
     H = c.height = innerHeight;
-    const n = Math.min(90, Math.floor(W * H / 18000));
-    pts = Array.from({ length: n }, () => ({
-      x: Math.random() * W, y: Math.random() * H,
-      vx: (Math.random() - .5) * .25, vy: (Math.random() - .5) * .25,
-      r: Math.random() * 1.3 + .5,
-      aqua: Math.random() > .72
-    }));
-  }
-  function loop() {
-    x.clearRect(0, 0, W, H);
-    for (let i = 0; i < pts.length; i++) {
-      const p = pts[i];
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0 || p.x > W) p.vx *= -1;
-      if (p.y < 0 || p.y > H) p.vy *= -1;
-      for (let j = i + 1; j < pts.length; j++) {
-        const q = pts[j], dx = p.x - q.x, dy = p.y - q.y;
-        const d = Math.hypot(dx, dy);
-        if (d < 130) {
-          x.beginPath();
-          x.moveTo(p.x, p.y); x.lineTo(q.x, q.y);
-          x.strokeStyle = `rgba(80,140,255,${(1 - d / 130) * .14})`;
-          x.lineWidth = .5; x.stroke();
+    cols = Math.ceil(W / CELL) + 1;
+    rows = Math.ceil(H / CELL) + 1;
+
+    // build grid: some rows carry a real word in binary, others are noise
+    grid = [];
+    for (let r = 0; r < rows; r++) {
+      const isWordRow = r % 5 === 2;
+      const seq = isWordRow ? bitsOf(WORDS[(r * 3) % WORDS.length]) + '__' : null;
+      const line = [];
+      for (let col = 0; col < cols; col++) {
+        let ch, word = false;
+        if (isWordRow) {
+          const s = seq[col % seq.length];
+          if (s === '_') ch = Math.random() < .5 ? '0' : '1';
+          else { ch = s; word = true; }
+        } else {
+          ch = Math.random() < .5 ? '0' : '1';
         }
+        line.push({ ch, word });
       }
-      x.beginPath();
-      x.arc(p.x, p.y, p.r, 0, 6.283);
-      x.fillStyle = p.aqua ? 'rgba(60,232,201,.7)' : 'rgba(80,140,255,.55)';
-      x.fill();
+      grid.push(line);
     }
-    if (!reduce) requestAnimationFrame(loop);
+
+    // pre-render the dim static layer once
+    base = document.createElement('canvas');
+    base.width = W; base.height = H;
+    const b = base.getContext('2d');
+    b.font = FONT; b.textBaseline = 'top';
+    for (let r = 0; r < rows; r++)
+      for (let col = 0; col < cols; col++) {
+        const cell = grid[r][col];
+        b.fillStyle = cell.word ? 'rgba(90,150,255,.13)' : 'rgba(110,135,195,.06)';
+        b.fillText(cell.ch, col * CELL, r * CELL);
+      }
   }
-  addEventListener('resize', size);
-  size(); loop();
+
+  function frame() {
+    x.clearRect(0, 0, W, H);
+    x.drawImage(base, 0, 0);
+    x.font = FONT; x.textBaseline = 'top';
+
+    // scan wave sweeping downward — brightens bits, reveals the hidden words
+    const band = CELL * 5;
+    const r0 = Math.max(0, Math.floor((scan - band) / CELL));
+    const r1 = Math.min(rows - 1, Math.floor((scan + band) / CELL));
+    for (let r = r0; r <= r1; r++) {
+      const cy = r * CELL;
+      const t = 1 - Math.abs(cy - scan) / band;
+      if (t <= 0) continue;
+      for (let col = 0; col < cols; col++) {
+        const cell = grid[r][col];
+        const a = t * (cell.word ? 1 : .4);
+        if (a < .05) continue;
+        x.fillStyle = cell.word
+          ? `rgba(60,232,201,${Math.min(a * .95, .9)})`
+          : `rgba(95,150,255,${Math.min(a * .55, .42)})`;
+        x.fillText(cell.ch, col * CELL, cy);
+      }
+    }
+    scan += .85;
+    if (scan > H + band) scan = -band;
+
+    // sporadic bit flips with a brief aqua flash
+    if (Math.random() < .3) flips.push({ r: (Math.random() * rows) | 0, col: (Math.random() * cols) | 0, life: 1 });
+    flips = flips.filter(f => {
+      f.life -= .035;
+      if (f.life <= 0) return false;
+      const cell = grid[f.r] && grid[f.r][f.col];
+      if (!cell) return false;
+      x.clearRect(f.col * CELL, f.r * CELL, CELL, CELL);
+      x.fillStyle = `rgba(60,232,201,${f.life * .7})`;
+      x.fillText(cell.ch === '0' ? '1' : '0', f.col * CELL, f.r * CELL);
+      return true;
+    });
+
+    requestAnimationFrame(frame);
+  }
+
+  addEventListener('resize', build);
+  build();
+  reduce ? x.drawImage(base, 0, 0) : frame();
 })();
 
 /* ---- typewriter ---- */
